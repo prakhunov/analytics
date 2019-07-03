@@ -96,7 +96,7 @@ class AnalyticsRoutesTest extends WordSpec with Matchers with ScalaFutures with 
 
   override val analyticsCache = constructCache
   override val analyticsActor: ActorRef =
-    system.actorOf(Props(new AnalyticsActor(analyticsCache)), "userRegistry")
+    system.actorOf(Props(new AnalyticsActor(analyticsCache)), "analyticsActor")
 
   override def beforeAll() {
     Await.ready(EventRepository.createSchema(), 90.seconds)
