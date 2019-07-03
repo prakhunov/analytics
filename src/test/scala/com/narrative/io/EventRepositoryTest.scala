@@ -19,7 +19,6 @@ object TestDataGenerator {
   implicit val dtOrdering: Ordering[ZonedDateTime] = Ordering.by(_.toEpochSecond)
 
   def getTestData: (List[AnalyticsData], List[(ZonedDateTime, AnalyticsSummary)]) = {
-    //generate 10,000 events with a distribution of 70% clicks, and 30% impressions (sounds about right to me)
     val events = Gen.frequency(
       (7, UserEvent.Click),
       (3, UserEvent.Impression))
@@ -31,7 +30,7 @@ object TestDataGenerator {
     //specified above with a timestamp in that hour
     val testData = (for {
       hour <- 10 until 1 by -1 //generate 10 hours of past hour data
-      _ <- 1 until 100 //10000 events per hour
+      _ <- 1 until 100 //100 events per hour
       event <- events.sample // generate an event in the 70 to 30 split
       userId <- Gen.oneOf(userIds).sample //pick one of the user ids above
       newTimeStamp = nowHour.minusHours(hour) //the zoneddatetime of that hour
